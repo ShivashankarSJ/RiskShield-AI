@@ -1,0 +1,1 @@
+["Transaction_Amount", "Account_Balance", "Previous_Fraudulent_Activity", "Daily_Transaction_Count", "Card_Age", "amount_log", "day_of_week", "transaction_type_encoded", "device_type_encoded", "location_encoded", "merchant_category_encoded", "card_type_encoded"]

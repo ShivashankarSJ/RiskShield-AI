@@ -1,0 +1,112 @@
+[
+    {
+        "timestamp": "2026-06-25 12:54:18",
+        "transaction_details": {
+            "transaction_id": "TXN_24229",
+            "amount": 121.01,
+            "location": "New York",
+            "merchant_category": "Groceries",
+            "fraud_probability": 50.385826462979544
+        },
+        "status": "logged"
+    },
+    {
+        "timestamp": "2026-06-25 12:54:19",
+        "transaction_details": {
+            "transaction_id": "TXN_12320",
+            "amount": 25.74,
+            "location": "Tokyo",
+            "merchant_category": "Clothing",
+            "fraud_probability": 51.40975325814633
+        },
+        "status": "logged"
+    },
+    {
+        "timestamp": "2026-06-25 12:54:20",
+        "transaction_details": {
+            "transaction_id": "TXN_15569",
+            "amount": 235.14,
+            "location": "Sydney",
+            "merchant_category": "Restaurants",
+            "fraud_probability": 53.497737041369135
+        },
+        "status": "logged"
+    },
+    {
+        "timestamp": "2026-06-25 12:54:21",
+        "transaction_details": {
+            "transaction_id": "TXN_12591",
+            "amount": 113.8,
+            "location": "Mumbai",
+            "merchant_category": "Travel",
+            "fraud_probability": 56.51630130913331
+        },
+        "status": "logged"
+    },
+    {
+        "timestamp": "2026-06-25 12:54:26",
+        "transaction_details": {
+            "transaction_id": "TXN_11456",
+            "amount": 202.75,
+            "location": "London",
+            "merchant_category": "Groceries",
+            "fraud_probability": 51.63458993445285
+        },
+        "status": "logged"
+    },
+    {
+        "timestamp": "2026-06-25 12:54:27",
+        "transaction_details": {
+            "transaction_id": "TXN_18862",
+            "amount": 3.56,
+            "location": "Sydney",
+            "merchant_category": "Groceries",
+            "fraud_probability": 62.01689490514034
+        },
+        "status": "logged"
+    },
+    {
+        "timestamp": "2026-06-25 12:54:28",
+        "transaction_details": {
+            "transaction_id": "TXN_26587",
+            "amount": 433.5,
+            "location": "Sydney",
+            "merchant_category": "Electronics",
+            "fraud_probability": 54.192328168252736
+        },
+        "status": "logged"
+    },
+    {
+        "timestamp": "2026-06-25 12:54:33",
+        "transaction_details": {
+            "transaction_id": "TXN_47032",
+            "amount": 150.6,
+            "location": "New York",
+            "merchant_category": "Travel",
+            "fraud_probability": 58.104404619764026
+        },
+        "status": "logged"
+    },
+    {
+        "timestamp": "2026-06-25 12:54:36",
+        "transaction_details": {
+            "transaction_id": "TXN_7778",
+            "amount": 64.54,
+            "location": "London",
+            "merchant_category": "Groceries",
+            "fraud_probability": 54.06955533468103
+        },
+        "status": "logged"
+    },
+    {
+        "timestamp": "2026-06-25 12:54:39",
+        "transaction_details": {
+            "transaction_id": "TXN_37446",
+            "amount": 18.42,
+            "location": "New York",
+            "merchant_category": "Travel",
+            "fraud_probability": 51.17131299801222
+        },
+        "status": "logged"
+    }
+]
