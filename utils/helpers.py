@@ -277,8 +277,39 @@ class MLPAutoencoderWrapper:
 # ---------------------------------------------------------------------
 # 4. Model Training and Loading
 # ---------------------------------------------------------------------
-def train_model(X_train, y_train, model_type='Random Forest', random_state=42):
-    """Train a model of the specified type."""
+def train_model(X_train, y_train=None, model_type='Random Forest', random_state=42):
+    """Train a model of the specified type. Overloaded to support both local predict_fraud.py and Streamlit app.py."""
+    if y_train is None:
+        # Streamlit app.py style: train_model(df)
+        df = X_train
+        from sklearn.pipeline import Pipeline
+        from sklearn.compose import ColumnTransformer
+        from sklearn.preprocessing import OrdinalEncoder, StandardScaler
+        from sklearn.ensemble import RandomForestClassifier
+        
+        X = df.drop(columns=[col for col in ["is_fraud", "IsFraud"] if col in df.columns])
+        y = df["is_fraud"] if "is_fraud" in df.columns else df["IsFraud"]
+        
+        numeric_features = ["amount", "hour", "day_of_week", "amount_log"]
+        numeric_features = [col for col in numeric_features if col in X.columns]
+        
+        categorical_features = ["transaction_type"]
+        categorical_features = [col for col in categorical_features if col in X.columns]
+        
+        preprocessor = ColumnTransformer(
+            transformers=[
+                ("num", StandardScaler(), numeric_features),
+                ("cat", OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1), categorical_features)
+            ]
+        )
+        
+        clf = Pipeline(steps=[
+            ("preprocessor", preprocessor),
+            ("classifier", RandomForestClassifier(n_estimators=100, random_state=random_state, n_jobs=-1))
+        ])
+        clf.fit(X, y)
+        return clf
+
     if model_type == 'Logistic Regression':
         clf = LogisticRegression(max_iter=500, random_state=random_state)
     elif model_type == 'Decision Tree':
@@ -536,3 +567,39 @@ def send_realtime_alert(txn_details, email_config=None):
             return False, f"Alert logged but email failed: {str(e)}"
             
     return True, "Alert logged successfully to local records (email not configured)."
+
+# ---------------------------------------------------------------------
+# 7. Dashboard Bridge Functions (Streamlit Cloud Compatibility)
+# ---------------------------------------------------------------------
+def load_data():
+    """Load the raw CSV dataset."""
+    csv_path = os.path.join(DATASETS_DIR, 'fraud_detection_dataset.csv')
+    if os.path.exists(csv_path):
+        return pd.read_csv(csv_path)
+    raise FileNotFoundError(f"Dataset not found at {csv_path}")
+
+def preprocess_data(df):
+    """Preprocess raw DataFrame to extract necessary features for the Streamlit dashboard."""
+    df_clean, _, _, _ = preprocess_dataset(df, 'credit_card')
+    
+    # Standardize columns to expected lowercase name structure for app.py
+    cols_to_keep = ["amount", "hour", "day_of_week", "amount_log", "transaction_type", "is_fraud"]
+    for col in cols_to_keep:
+        if col not in df_clean.columns:
+            if col == "amount_log":
+                df_clean["amount_log"] = np.log1p(df_clean["amount"]) if "amount" in df_clean.columns else 0.0
+            elif col == "hour":
+                df_clean["hour"] = 0
+            elif col == "day_of_week":
+                df_clean["day_of_week"] = 0
+            elif col == "transaction_type":
+                df_clean["transaction_type"] = "purchase"
+            elif col == "is_fraud":
+                df_clean["is_fraud"] = 0
+                
+    return df_clean[cols_to_keep]
+
+def load_model(path):
+    """Load model from the specified file path."""
+    with open(path, 'rb') as f:
+        return pickle.load(f)

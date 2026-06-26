@@ -6,7 +6,7 @@ import pandas as pd
 import pickle
 
 # Add the project root to the Python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from utils.helpers import (
     preprocess_dataset, train_model, 
     evaluate_model_metrics, save_trained_model, DB_PATH, MODELS_DIR
